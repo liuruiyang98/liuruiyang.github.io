@@ -4,6 +4,8 @@ title: JittorSummary工具
 categories: [Jittor]
 ---
 
+# Jittor Summary Tool
+
 清华大学**计**算机系**图**形学实验室提出了一个全新的深度学习框架——**计图** (Jittor)，它是一个**采用**元算子表达神经网络计算单元**、**完全基于动态编译（Just-in-Time）的深度学习框架。详情可见 [Jittor官网](https://cg.cs.tsinghua.edu.cn/jittor/)。本博客介绍了从 torchsummary 迁移的 jittorsummary 工具的使用方法，源代码链接点击 [此处](https://github.com/liuruiyang98/Jittor-summary)。方便使用的话欢迎大家 Star!
 
 ## 1. 使用
