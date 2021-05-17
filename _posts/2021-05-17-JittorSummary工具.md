@@ -4,11 +4,9 @@ title: JittorSummary工具
 categories: [Jittor]
 ---
 
-# Keras style `model.summary()` in Jittor
+清华大学**计**算机系**图**形学实验室提出了一个全新的深度学习框架——**计图** (Jittor)，它是一个**采用**元算子表达神经网络计算单元**、**完全基于动态编译（Just-in-Time）的深度学习框架。详情可见 [Jittor官网](https://cg.cs.tsinghua.edu.cn/jittor/)。本博客介绍了从 torchsummary 迁移的 jittorsummary 工具的使用方法，源代码链接点击 [此处](https://github.com/liuruiyang98/Jittor-summary)。方便使用的话欢迎大家 Star!
 
-清华大学**计**算机系**图**形学实验室提出了一个全新的深度学习框架——**计图** (Jittor)，它是一个**采用**元算子表达神经网络计算单元**、**完全基于动态编译（Just-in-Time）的深度学习框架。详情可见 [Jittor官网][https://cg.cs.tsinghua.edu.cn/jittor/]。本博客介绍了从 torchsummary 迁移的 jittorsummary 工具的使用方法，源代码链接点击 [此处][https://github.com/liuruiyang98/Jittor-summary]。方便使用的话欢迎大家 Star!
-
-### 1. 使用
+## 1. 使用
 
 - `git clone https://github.com/liuruiyang98/Jittor-summary.git`
 
@@ -17,16 +15,16 @@ from jittorsummary import summary
 summary(your_model, input_size=(channels, H, W), device='cpu')
 ```
 
-* `input_size` 需要保证网络能够正确前向推理。
-*  jittorsummary 支持 **cuda**。
-  * `device = ‘cpu’`  ===> `jt.flags.use_cuda = 0`
-  * `device = ‘cuda’`  ===> `jt.flags.use_cuda = 1`
-* 编写 jittorsummary 时 jittor 版本号为 **1.2.2.34**. 出于部分 jittor 开发原因，中间某些版本不可用。之后 jittor version >= **1.2.2.60** 是可用的。
+- `input_size` 需要保证网络能够正确前向推理。
+-  jittorsummary 支持 **cuda**。
+   - `device = ‘cpu’`  ===> `jt.flags.use_cuda = 0`
+   - `device = ‘cuda’`  ===> `jt.flags.use_cuda = 1`
+- 编写 jittorsummary 时 jittor 版本号为 **1.2.2.34**. 出于部分 jittor 开发原因，中间某些版本不可用。之后 jittor version >= **1.2.2.60** 是可用的。
 
 
-### 2. 样例
+## 2. 样例
 
-#### 2.1 CNN for MNIST
+### 2.1 CNN for MNIST
 
 ```python
 import jittor as jt
@@ -80,7 +78,7 @@ Estimated Total Size (MB): 0.15
 
 
 
-#### 2.2 Multiple Inputs
+### 2.2 Multiple Inputs
 
 ```python
 import jittor as jt
@@ -132,7 +130,7 @@ Estimated Total Size (MB): 0.46
 
 
 
-#### 2.3 Multiple Ouputs
+### 2.3 Multiple Ouputs
 
 ```python
 import jittor as jt
@@ -185,7 +183,7 @@ Estimated Total Size (MB): 0.15
 
 
 
-#### 2.4 CUDA support
+### 2.4 CUDA support
 
 ```python
 import jittor as jt
@@ -217,7 +215,7 @@ summary(model, (1, 28, 28), device='cuda')
 
 
 
-#### 2.5 Try more models
+### 2.5 Try more models
 
 我提供了 **UNet, UNet++** 和 **Dense-UNet** 的 pytorch 以及 jittor 实现。方便比较  `torchsummary` 和 `jittorsummary` 的运行结果。
 
@@ -235,13 +233,13 @@ summary(model, (1, 28, 28), device='cuda')
 
 
 
-### 3. Pytorch-to-Jittor
+## 3. Pytorch-to-Jittor
 
-* 请参照 [pytorch-to-jittor](https://cg.cs.tsinghua.edu.cn/jittor/tutorial/2020-5-2-16-43-pytorchconvert/) 提供的文档进行 pytorch 模型到 jittor 模型的转换
-* 在线转换工具：[pt-converter](https://cg.cs.tsinghua.edu.cn/jittor/pt_converter/).
+- 请参照 [pytorch-to-jittor](https://cg.cs.tsinghua.edu.cn/jittor/tutorial/2020-5-2-16-43-pytorchconvert/) 提供的文档进行 pytorch 模型到 jittor 模型的转换
+- 在线转换工具：[pt-converter](https://cg.cs.tsinghua.edu.cn/jittor/pt_converter/).
 
 
 
-### References
+## References
 
-* The idea for this package sparked from [pytorch-summary](https://github.com/sksq96/pytorch-summary).
+- The idea for this package sparked from [pytorch-summary](https://github.com/sksq96/pytorch-summary).
