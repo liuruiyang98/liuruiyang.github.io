@@ -224,7 +224,7 @@ RPN的损失也分为两个部分，分类损失和边界框回归损失。其�
 
 ![img28](FasterRCNN-8.png)
 
-注意分类损失这里其实用的是类似多分类的 softmax cross-entropy，而不是二分类的 sigmoid cross-entropy。在下图中，第一项损失为 $-\log 0.9$，第二项因为真实标签为0，所以为 $-\log 0.$2，依此类推。
+注意分类损失这里其实用的是类似多分类的 softmax cross-entropy，而不是二分类的 sigmoid cross-entropy。在下图中，第一项损失为 $-\log 0.9$，第二项因为真实标签为 0，所以为 $-\log 0.2$，依此类推。
 
 ![img29](FasterRCNN-9.png)
 
