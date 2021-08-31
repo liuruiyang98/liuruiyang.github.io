@@ -51,7 +51,7 @@ $$
 
 光看理论还不够，具体实践出真知！
 
-在**训练过程**中，均值 $\mu_B$ 和方差 $\delta^2_B$ 是通过计算当前批次数据得到的，记为 $\mu_{now}$ 和 $\delta^2_{now}$， 而我们的**验证以及预测过程**中所使用的均值方差是一个统计量，记为 $\mu_{statistic}$ 和 $\delta^2_{statistic}$，其具体更新策略如下，其中 momentum默认取0.1：
+在**训练过程**中，均值 $\mu_B$ 和方差 $\delta_B^2$ 是通过计算当前批次数据得到的，记为 $\mu_{now}$ 和 $\delta_{now}^2$， 而我们的**验证以及预测过程**中所使用的均值方差是一个统计量，记为 $\mu_{statistic}$ 和 $\delta_{statistic}^2$，其具体更新策略如下，其中 momentum默认取0.1：
 $$
 \begin{aligned}
 \mu_{\text {statistic }+1} &=(1-\text { momentum }) * \mu_{\text {statistic }}+\text { momentum } * \mu_{\text {now }} \\
@@ -59,8 +59,7 @@ $$
 \end{aligned}
 $$
 
-
-**注意实现细节**，在pytorch中对当前批次 Feature Map 进行 BN 处理时所使用的 $\delta^2_{now}$ 是**总体标准差**，计算公式如下：
+**注意实现细节**，在pytorch中对当前批次 Feature Map 进行 BN 处理时所使用的 $\delta_{now}^2$ 是**总体标准差**，计算公式如下：
 $$
 \sigma_{\text {now }}^{2}=\frac{1}{m} \sum_{i=1}^{m}\left(x_{i}-\mu_{\text {now }}\right)^{2}
 $$
