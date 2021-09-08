@@ -6,7 +6,7 @@ categories: [深度学习, 图像分类, 基础知识]
 
 ## 深度学习之图像分类（十七）Transformer中Self-Attention以及Multi-Head Attention详解
 
-终于来到了 Transformer，从 2013 年分类网络学习到如今最火的 Transformer，真的不容易。本节学习 Transformer 中 Self-Attention 以及 Multi-Head Attention详解（注意不是 Version Transformer）。学习视频源于 [Bilibili](https://www.bilibili.com/video/BV15v411W78M)，博客参考 [详解Transformer中Self-Attention以及Multi-Head Attention](https://blog.csdn.net/qq_37541097/article/details/117691873)。
+终于来到了 Transformer，从 2013 年分类网络学习到如今最火的 Transformer，真的不容易。本节学习 Transformer 中 Self-Attention 以及 Multi-Head Attention详解（注意不是 Version Transformer）。学习视频源于 [Bilibili](https://www.bilibili.com/video/BV15v411W78M)，博客参考 [详解Transformer中Self-Attention以及Multi-Head Attention](https://blog.csdn.net/qq_37541097/article/details/117691873)。建议先看一定[李宏毅老师的讲解](https://www.bilibili.com/video/BV1Xp4y1b7ih?p=1)。
 
 ![img0](transformer-0.png)
 
