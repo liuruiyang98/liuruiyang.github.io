@@ -106,6 +106,16 @@ $$
 
 
 
+Split Attention 如下图所示，假设有 k 个 $H \times W \times C$ 的特征矩阵 ：
+
+* 首先是对于各个特征矩阵元素求和得到一个 $H \times W \times C$ 的特征矩阵
+* 然后按照空间内进行全局平均池化 (等价于直接求和)，将特征矩阵变为一个 C 维向量
+* 然后经过一个全连接层 C--> kC，BN，ReLU，并将全连接层的输出拆分为 k 个 C 维向量
+* 进行 Softmax 得到每个特征矩阵对应的权重 (关于 nn.Softmax 使用可以参考 [pytorch:nn.Softmax()](https://blog.csdn.net/weixin_41391619/article/details/104823086))，得到的结果就是第一个通道，k 个特征矩阵权重和为 1；第二个通道，k 个特征矩阵权重和为 1 等等...
+* 将每个 Split Attention 模块输入的每个 Feature Map 和计算出来的每个 split 的权重相乘，再将结果加和，得到最终的结果
+
+![img9](vip-9.png)
+
 
 
 最终 Permutator 的实现可以表示为，这里忽略了激活函数。
@@ -118,18 +128,26 @@ $$
 
 
 
+#### 3.3 分支分析
 
-### 5. 总结
+Permute-MLP 层最大的特点在于其中包含了为宽度方向、长度方向和通道方向独立建模的三个分支，但是每个分支作用如何？作者进行了消融实验。下表实验发现，在 Permute-MLP 三个分支中将高度或者宽度分支替换为通道分支都会造成大幅度性能的下降 (7.8\% 和 7.9\%)，体现了两个方向信息相互补充聚合的必要性。此外，Split Attention 相比简单粗暴的元素求和带来了 0.4\% 的提升。但是，Split Attention 结构的影响不如训练过程中数据增强来得大...
 
-对于 S2MLP 的一些反思：S2MLP 比 AS-MLP 更早挂上，也是向 MLP 架构中引入局部性特性。做法其实很简单，在 ImageNet1k 数据集上能 work 也很自然（这个数据量不足以让 MLP-Mixer 学会普适的表示）。但是，就 S2MLPv1 而言，其贡献点还是薄弱，不仅性能不是特别出彩；对于感受野的扩展性以及设计也不足；此外，都使用了对空间不敏感的 spatial-shift 操作以及 channel-mixing MLP 了，没有更进一步推出下游任务的 backbone 是比较可惜的点。相比而言，S2MLPv2 结合了 S2MLPv1 和 ViP 的思想，会更值得关注。所以下一篇学习的就是 ViP，再下一篇就是学习 S2MLPv2。
+![img10](vip-10.png)
+
+
+
+
+### 4. 总结
+
+对于 ViP 的一些反思：ViP 是一种用于视觉识别任务的概念简单、数据高效的类MLP架构。ViP 采用线性投影方式沿高与宽维度编码特征表达。这使的 ViP 能够沿单一空间维度捕获长距离依赖关系，同时沿另一个方向保持精确的位置信息，然后通过相互补充聚合方式产生位置敏感输出，进而形成关于目标区域的强有力表征。通过 Split Attention 进行信息整合也是很好的点。但提出的 Permutator 的一个明显的缺点是空间维度上的缩放问题，比如在 Permute-MLP 层中 N = W，这就使得 ViP 无法接受任意大小的图像输入。ViP 也没办法构成 Backbone 用于下游任务。ViP 使用的感受野也并非传统计算机视觉底层特征提取的建议感受野。
 
 延续我一贯的认识，如何在 MLP 架构中如何结合图像局部性和长距离依赖依然是值得探讨的点。
 
 
 
- ### 6. 代码
+ ### 5. 代码
 
-代码来源详见 [此处](https://github.com/Andrew-Qibin/VisionPermutator)
+代码来源详见 [此处](https://github.com/Andrew-Qibin/VisionPermutator)。
 
 ```python
 import torch
