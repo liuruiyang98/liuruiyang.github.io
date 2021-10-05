@@ -110,7 +110,7 @@ Split Attention 如下图所示，假设有 k 个 $H \times W \times C$ 的特�
 
 * 首先是对于各个特征矩阵元素求和得到一个 $H \times W \times C$ 的特征矩阵
 * 然后按照空间内进行全局平均池化 (等价于直接求和)，将特征矩阵变为一个 C 维向量
-* 然后经过一个全连接层 C--> kC，BN，ReLU，并将全连接层的输出拆分为 k 个 C 维向量
+* 然后经过两个全连接层 C-->C'--> kC，实现中作者将 C‘ 确定为 C//4，Dropout，BN，ReLU 等就不做叙述，并将全连接层的输出拆分为 k 个 C 维向量
 * 进行 Softmax 得到每个特征矩阵对应的权重 (关于 nn.Softmax 使用可以参考 [pytorch:nn.Softmax()](https://blog.csdn.net/weixin_41391619/article/details/104823086))，得到的结果就是第一个通道，k 个特征矩阵权重和为 1；第二个通道，k 个特征矩阵权重和为 1 等等...
 * 将每个 Split Attention 模块输入的每个 Feature Map 和计算出来的每个 split 的权重相乘，再将结果加和，得到最终的结果
 
